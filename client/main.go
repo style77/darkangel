@@ -19,9 +19,9 @@ func main() {
 
 	defer conn.Close()
 
-	buffer := make([]byte, 1024)
+	// buffer := make([]byte, 1024)
 
 	for {
-		go HandleCommand(buffer)
+
 	}
 }
