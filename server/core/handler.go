@@ -52,13 +52,16 @@ func connectionsCmd(request Request) CommandResult {
 }
 
 func execBashCmd(request Request) CommandResult {
-	target := request.Server.GetConnection(request.Args[0])
-	if target == nil {
+	targets := request.Server.GetConnection(request.Args[0])
+	if targets == nil {
 		return HandleWrongTarget(request)
 	}
-	fmt.Println(target)
 
-	script := request.Args[2] // todo execute this script on target machine and return response with channels
+	for _, target := range targets {
+		fmt.Println(target.Conn.RemoteAddr().String())
+	}
+
+	// script := request.Args[2] // todo execute this script on target machine and return response with channels
 
 	return CommandResult{}
 }
