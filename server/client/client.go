@@ -1,7 +1,7 @@
 package client
 
 import (
-	"bufio"
+	"encoding/gob"
 	"fmt"
 	"net"
 )
@@ -10,15 +10,19 @@ type Client struct {
 	Conn net.Conn
 }
 
+type Output struct {
+	Output     string
+	RemoteAddr string
+}
+
 func (client *Client) HandleRequest() {
-	reader := bufio.NewReader(client.Conn)
+	dec := gob.NewDecoder(client.Conn)
 	for {
-		message, err := reader.ReadString('\n')
-		if err != nil {
+		var output Output
+		if err := dec.Decode(&output); err != nil {
 			client.Conn.Close()
 			return
 		}
-		fmt.Printf("Message incoming: %s", string(message))
-		client.Conn.Write([]byte("Message received.\n"))
+		fmt.Printf("\n\rOutput from %s: %s\n", output.RemoteAddr, output.Output)
 	}
 }
