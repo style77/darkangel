@@ -30,10 +30,10 @@ var commandsMap = map[string]Command{
 		Callback:    connectionsCmd,
 		Arguments:   []Argument{},
 	},
-	"execbash": {
-		Name:        "execbash",
-		Description: "Run bash script",
-		Callback:    execBashCmd,
+	"execps": {
+		Name:        "execps",
+		Description: "Run Powershell script",
+		Callback:    execPsCmd,
 		Arguments: []Argument{
 			{Name: "target", Description: "target remote address"},
 			{Name: "script", Description: "bash script to execute"},
