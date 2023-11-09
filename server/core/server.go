@@ -26,8 +26,7 @@ func (server *Server) ListenForInput() {
 		scanner.Scan()
 		input := scanner.Text()
 
-		formattedInput := strings.ToLower(input)
-		splittedInput := strings.Fields(formattedInput)
+		splittedInput := strings.Fields(input)
 
 		if len(splittedInput) == 0 {
 			continue

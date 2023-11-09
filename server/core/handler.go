@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 	"text/tabwriter"
 )
 
@@ -16,7 +17,7 @@ func HandleCommand(request Request) CommandResult {
 	if request.CommandName == "help" {
 		cmd, exists = helpCmd, true
 	} else {
-		cmd, exists = commandsMap[request.CommandName]
+		cmd, exists = commandsMap[strings.ToLower(request.CommandName)]
 	}
 	if !exists {
 		return HandleCommandDoesNotExists(request.CommandName)
