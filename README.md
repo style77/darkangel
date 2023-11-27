@@ -7,7 +7,7 @@ I did this project purely for fun, I forgot how much fun Golang gives me. Howeve
 ## Showcase
 I understand sometimes you just want to see how project works so instead of forcing you to clone repository onto your local machine, I recorded short showcase
 
-[![Showcase](https://img.youtube.com/vi/5xTrj2-Jqwk/0.jpg)](ttps://youtu.be/5xTrj2-Jqwk)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5xTrj2-Jqwk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
